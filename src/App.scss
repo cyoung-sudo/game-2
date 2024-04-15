@@ -1,0 +1,31 @@
+#app {
+  height: 100vh;
+
+  #display-wrap {
+    height: 10%;
+    background-color: beige;
+  }
+  
+  #board-wrap {
+    height: 50%;
+    background-color: lightgray;
+  }
+  
+  #controls-wrap {
+    display: flex;
+    height: 40%;
+    background-color: cadetblue;
+
+    #movement-wrap {
+      height: 100%;
+      width: 50%;
+      background-color: aliceblue;
+    }
+
+    #actions-wrap {
+      height: 100%;
+      width: 50%;
+      background-color: beige;
+    }
+  }
+}

@@ -1,4 +1,6 @@
 import './App.scss';
+// Redux
+import { useSelector, useDispatch } from 'react-redux';
 // Components
 import Display from "./components/display/Display";
 import Board from "./components/board/Board";
@@ -6,6 +8,10 @@ import Movement from "./components/controls/Movement";
 import Actions from "./components/controls/Actions";
 
 function App() {
+  // Hooks
+  let {board} = useSelector((state) => state.board);
+  let dispatch = useDispatch();
+
   return (
     <div id="app">
       <div id="display-wrap">
@@ -13,7 +19,7 @@ function App() {
       </div>
 
       <div id="board-wrap">
-        <Board/>
+        <Board board={board}/>
       </div>
 
       <div id="controls-wrap">

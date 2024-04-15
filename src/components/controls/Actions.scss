@@ -1,0 +1,52 @@
+#actions {
+
+  .actions-ingame {
+    margin-bottom: 2rem;
+
+    .actions-ingame-top {
+      display: flex;
+      justify-content: end;
+      width: 6rem;
+
+      > button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 3rem;
+        width: 3rem;
+        font-size: 1.5rem;
+        border-radius: 2rem;
+        border: none;
+        background-color: teal;
+        color: white;
+      }
+    }
+
+    .actions-ingame-bot {
+      display: flex;
+      width: 6rem;
+
+      > button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 3rem;
+        width: 3rem;
+        font-size: 1.5rem;
+        border-radius: 2rem;
+        border: none;
+        background-color: teal;
+        color: white;
+      }
+    }
+  }
+
+  .actions-newgame {
+      display: flex;
+      justify-content: center;
+
+      > button {
+        padding: 0.3rem;
+      }
+  }
+}

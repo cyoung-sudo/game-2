@@ -3,7 +3,7 @@ import "./Actions.scss";
 import { GiBroadsword } from "react-icons/gi";
 import { GiUnlitBomb } from "react-icons/gi";
 
-const Actions = ({useSword, useBomb}) => {
+const Actions = ({useSword, useBomb, newGame}) => {
   return (
     <div id="actions">
       <div className="actions-ingame">
@@ -17,7 +17,7 @@ const Actions = ({useSword, useBomb}) => {
       </div>
 
       <div className="actions-newgame">
-        <button>New Game</button>
+        <button onClick={newGame}>New Game</button>
       </div>
     </div>
   );

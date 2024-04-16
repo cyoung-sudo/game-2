@@ -1,9 +1,9 @@
 import './App.scss';
 // Redux
 import { useSelector, useDispatch } from 'react-redux';
-import { updateBoard } from "./redux/boardSlice";
-import { updateHealth, updateSwords, updateBombs } from "./redux/playerSlice";
-import { updateScore, updateFinish } from "./redux/gameSlice";
+import { updateBoard, resetBoard } from "./redux/boardSlice";
+import { updateHealth, updateSwords, updateBombs, resetPlayer } from "./redux/playerSlice";
+import { updateScore, updateFinish, resetGame } from "./redux/gameSlice";
 // Components
 import Display from "./components/display/Display";
 import Board from "./components/board/Board";
@@ -74,7 +74,7 @@ function App() {
       dispatch(updateBoard(newBoard));
       dispatch(updateScore(score + 1));
     }
-  }
+  };
 
   let useSword = () => {
     if(finish) return;
@@ -126,7 +126,7 @@ function App() {
     }
 
     dispatch(updateBoard(res.board));
-  }
+  };
 
   let useBomb = () => {
     if(finish) return;
@@ -149,7 +149,13 @@ function App() {
 
     dispatch(updateBombs(bombs - 1));
     dispatch(updateBoard(boardCopy));
-  }
+  };
+
+  let newGame = () => {
+    dispatch(resetGame());
+    dispatch(resetBoard());
+    dispatch(resetPlayer());
+  };
 
   return (
     <div id="app">
@@ -174,7 +180,8 @@ function App() {
         <div id="actions-wrap">
           <Actions
             useSword={useSword}
-            useBomb={useBomb}/>
+            useBomb={useBomb}
+            newGame={newGame}/>
         </div>
       </div>
     </div>

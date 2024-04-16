@@ -16,12 +16,27 @@ export const movePlayer = (board, player, dir) => {
     newCell = (x + 1 < cL ? [x+1, y] : -1);
   }
 
-  let generateNew = false;
+  let generateNew = false; // Generate new board?
+  let cellVal = null; // Value of new cell
 
   // Valid coords
   if(newCell !== -1) {
+    let newVal = board[newCell[0]][newCell[1]];
+
     // Check for wall
-    if(board[newCell[0]][newCell[1]] !== "W") {
+    if(newVal !== "W") {
+      // Set cellVal
+      if(newVal === "S") {
+        cellVal = "S"
+      } else if(newVal === "H") {
+        cellVal = "H"
+      } else if(newVal === "B") {
+        cellVal = "B"
+      } else {
+        cellVal = "_";
+      }
+        
+      // Move player
       board[newCell[0]][newCell[1]] = "P";
       board[x][y] = "_";
     }
@@ -31,7 +46,8 @@ export const movePlayer = (board, player, dir) => {
 
   return {
     board,
-    generateNew
+    generateNew,
+    cellVal
   };
 };
 

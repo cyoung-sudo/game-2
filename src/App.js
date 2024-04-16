@@ -2,6 +2,7 @@ import './App.scss';
 // Redux
 import { useSelector, useDispatch } from 'react-redux';
 import { updateBoard } from "./redux/boardSlice";
+import { updateHealth, updateSwords, updateBombs } from "./redux/playerSlice";
 // Components
 import Display from "./components/display/Display";
 import Board from "./components/board/Board";
@@ -13,6 +14,7 @@ import { movePlayer, generateBoard } from "./utils/generalUtils";
 function App() {
   // Hooks
   let {board} = useSelector((state) => state.board);
+  let {health, swords, bombs} = useSelector((state) => state.player);
   let dispatch = useDispatch();
 
   let move = dir => {
@@ -37,6 +39,15 @@ function App() {
 
     // Current board
     if(!res.generateNew) {
+      // Update player stats
+      if(res.cellVal === "S" && swords < 2) {
+        dispatch(updateSwords(swords + 1));
+      } else if(res.cellVal === "H" && health < 3) {
+        dispatch(updateHealth(health + 1));
+      } else if(res.cellVal === "B" && bombs < 1) {
+        dispatch(updateBombs(bombs + 1));
+      }
+
       dispatch(updateBoard(res.board));
     // Generate new board
     } else {
@@ -48,7 +59,10 @@ function App() {
   return (
     <div id="app">
       <div id="display-wrap">
-        <Display/>
+        <Display
+          health={health}
+          swords={swords}
+          bombs={bombs}/>
       </div>
 
       <div id="board-wrap">

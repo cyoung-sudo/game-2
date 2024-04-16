@@ -43,5 +43,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: black;
+    color: white;
+    border: none;
+
+    &:hover {
+      opacity: 50%;
+      cursor: pointer;
+    }
   }
 }

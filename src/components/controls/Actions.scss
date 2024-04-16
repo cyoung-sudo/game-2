@@ -17,8 +17,8 @@
         font-size: 1.5rem;
         border-radius: 2rem;
         border: none;
-        background-color: skyblue;
-        color: black;
+        background-color: black;
+        color: skyblue;
       }
     }
 
@@ -35,8 +35,8 @@
         font-size: 1.5rem;
         border-radius: 2rem;
         border: none;
-        background-color: khaki;
-        color: black;
+        background-color: black;
+        color: khaki;
       }
     }
   }
@@ -46,7 +46,20 @@
       justify-content: center;
 
       > button {
-        padding: 0.3rem;
+        padding: 0.3rem 0.5rem;
+        background-color: black;
+        color: white;
+        border: none;
+        border-radius: 1rem;
+        font-size: 0.8rem;
       }
+  }
+
+  button {
+    
+    &:hover {
+      opacity: 50%;
+      cursor: pointer;
+    }
   }
 }

@@ -1,4 +1,6 @@
 export const movePlayer = (board, player, dir) => {
+  let generateNew = false; // Generate new board?
+  let cellVal = null; // Value of new cell
   let x = player[0];
   let y = player[1];
   let rL = board[0].length;
@@ -12,12 +14,16 @@ export const movePlayer = (board, player, dir) => {
     newCell = (y - 1 >= 0 ? [x, y-1] : -1);
   } else if(dir === "right") {
     newCell = (y + 1 < rL ? [x, y+1] : -1);
-  } else {
+  } else if(dir === "down") {
     newCell = (x + 1 < cL ? [x+1, y] : -1);
+  // Skip
+  } else {
+    return {
+      board,
+      generateNew,
+      cellVal: "P"
+    };
   }
-
-  let generateNew = false; // Generate new board?
-  let cellVal = null; // Value of new cell
 
   // Valid coords
   if(newCell !== -1) {

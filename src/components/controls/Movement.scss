@@ -22,6 +22,10 @@
       width: 4rem;
       font-size: 1.5rem;
     }
+
+    .movement-mid-skip {
+      width: 2rem;
+    }
   }
 
   .movement-bot {
@@ -33,5 +37,11 @@
       width: 2rem;
       font-size: 1.5rem;
     }
+  }
+
+  button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }

@@ -4,6 +4,7 @@ import { FaLongArrowAltUp } from "react-icons/fa";
 import { FaLongArrowAltLeft } from "react-icons/fa";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import { FaLongArrowAltDown } from "react-icons/fa";
+import { BiPause } from "react-icons/bi";
 
 
 const Movement = ({move}) => {
@@ -15,6 +16,7 @@ const Movement = ({move}) => {
 
       <div className="movement-mid">
         <button onClick={() => move("left")}><FaLongArrowAltLeft/></button>
+        <button className="movement-mid-skip" onClick={() => move("skip")}><BiPause/></button>
         <button onClick={() => move("right")}><FaLongArrowAltRight/></button>
       </div>
 

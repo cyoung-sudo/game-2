@@ -2,7 +2,8 @@ import './App.scss';
 // Redux
 import { useSelector, useDispatch } from 'react-redux';
 import { updateBoard } from "./redux/boardSlice";
-import { updateHealth, updateSwords, updateBombs, updateDead } from "./redux/playerSlice";
+import { updateHealth, updateSwords, updateBombs } from "./redux/playerSlice";
+import { updateScore, updateFinish } from "./redux/gameSlice";
 // Components
 import Display from "./components/display/Display";
 import Board from "./components/board/Board";
@@ -14,11 +15,12 @@ import { movePlayer, moveEnemies, generateBoard } from "./utils/generalUtils";
 function App() {
   // Hooks
   let {board} = useSelector((state) => state.board);
-  let {health, swords, bombs, dead} = useSelector((state) => state.player);
+  let {health, swords, bombs} = useSelector((state) => state.player);
+  let {score, finish} = useSelector((state) => state.game);
   let dispatch = useDispatch();
 
   let move = dir => {
-    if(dead) return;
+    if(finish) return;
 
     // Copy board & find player coord
     let boardCopy = new Array(board.length).fill(null).map(() => new Array(board[0].length));
@@ -37,7 +39,7 @@ function App() {
     if(!res.generateNew) {
       // Player encountered enemy
       if(res.cellVal === "E") {
-        if(health <= 1) dispatch(updateDead(true));
+        if(health <= 1) dispatch(updateFinish(true));
         dispatch(updateHealth(health - 1));
       // Update player stats
       } else if(res.cellVal === "S" && swords < 2) {
@@ -61,7 +63,7 @@ function App() {
 
       // Player attacked
       if(res2.attacked) {
-        if(health <= 1) dispatch(updateDead(true));
+        if(health <= 1) dispatch(updateFinish(true));
         dispatch(updateHealth(health - 1));
       }
 
@@ -70,6 +72,7 @@ function App() {
     } else {
       let newBoard = generateBoard();
       dispatch(updateBoard(newBoard));
+      dispatch(updateScore(score + 1));
     }
   }
 
@@ -79,7 +82,9 @@ function App() {
         <Display
           health={health}
           swords={swords}
-          bombs={bombs}/>
+          bombs={bombs}
+          score={score}
+          finish={finish}/>
       </div>
 
       <div id="board-wrap">

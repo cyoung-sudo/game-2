@@ -76,6 +76,58 @@ function App() {
     }
   }
 
+  let attack = () => {
+    if(finish) return;
+    if(swords <= 0) return;
+
+    // Copy board & find player coord
+    let boardCopy = new Array(board.length).fill(null).map(() => new Array(board[0].length));
+    let player = null;
+    for(let i = 0; i < board.length; i++) {
+      for(let j = 0; j < board[0].length; j++) {
+        if(board[i][j] === "P") player = [i, j];
+        boardCopy[i][j] = board[i][j];
+      }
+    }
+
+    // Kill nearby enemies (up, left, right, down)
+    let x = player[0];
+    let y = player[1];
+    if(boardCopy[x-1][y] === "E") {
+      boardCopy[x-1][y] = "_";
+    }
+    if(boardCopy[x][y-1] === "E") {
+      boardCopy[x][y-1] = "_";
+    }
+    if(boardCopy[x][y+1] === "E") {
+      boardCopy[x][y+1] = "_";
+    }
+    if(boardCopy[x+1][y] === "E") {
+      boardCopy[x+1][y] = "_";
+    }
+    
+    dispatch(updateSwords(swords - 1));
+
+    // Find enemy coords
+    let enemies = [];
+    for(let i = 0; i < boardCopy.length; i++) {
+      for(let j = 0; j < boardCopy[0].length; j++) {
+        if(boardCopy[i][j] === "E") enemies.push([i, j]);
+      }
+    }
+
+    // Move enemies
+    let res = moveEnemies(boardCopy, enemies);
+
+    // Player attacked
+    if(res.attacked) {
+      if(health <= 1) dispatch(updateFinish(true));
+      dispatch(updateHealth(health - 1));
+    }
+
+    dispatch(updateBoard(res.board));
+  }
+
   return (
     <div id="app">
       <div id="display-wrap">
@@ -97,7 +149,8 @@ function App() {
         </div>
 
         <div id="actions-wrap">
-          <Actions/>
+          <Actions
+            attack={attack}/>
         </div>
       </div>
     </div>

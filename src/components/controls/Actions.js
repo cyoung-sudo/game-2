@@ -3,16 +3,16 @@ import "./Actions.scss";
 import { GiBroadsword } from "react-icons/gi";
 import { GiUnlitBomb } from "react-icons/gi";
 
-const Actions = ({attack}) => {
+const Actions = ({useSword, useBomb}) => {
   return (
     <div id="actions">
       <div className="actions-ingame">
         <div className="actions-ingame-top">
-          <button onClick={attack}><GiBroadsword/></button>
+          <button onClick={useSword}><GiBroadsword/></button>
         </div>
 
         <div className="actions-ingame-bot">
-          <button><GiUnlitBomb/></button>
+          <button onClick={useBomb}><GiUnlitBomb/></button>
         </div>
       </div>
 

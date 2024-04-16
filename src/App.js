@@ -76,7 +76,7 @@ function App() {
     }
   }
 
-  let attack = () => {
+  let useSword = () => {
     if(finish) return;
     if(swords <= 0) return;
 
@@ -105,7 +105,7 @@ function App() {
     if(boardCopy[x+1][y] === "E") {
       boardCopy[x+1][y] = "_";
     }
-    
+
     dispatch(updateSwords(swords - 1));
 
     // Find enemy coords
@@ -126,6 +126,29 @@ function App() {
     }
 
     dispatch(updateBoard(res.board));
+  }
+
+  let useBomb = () => {
+    if(finish) return;
+    if(bombs <= 0) return;
+
+    // Copy board & find enemy coords
+    let boardCopy = new Array(board.length).fill(null).map(() => new Array(board[0].length));
+    let enemies = []
+    for(let i = 0; i < board.length; i++) {
+      for(let j = 0; j < board[0].length; j++) {
+        if(board[i][j] === "E") enemies.push([i, j]);
+        boardCopy[i][j] = board[i][j];
+      }
+    }
+
+    // Kill all enemies
+    for(let coord of enemies) {
+      boardCopy[coord[0]][coord[1]] = "_";
+    }
+
+    dispatch(updateBombs(bombs - 1));
+    dispatch(updateBoard(boardCopy));
   }
 
   return (
@@ -150,7 +173,8 @@ function App() {
 
         <div id="actions-wrap">
           <Actions
-            attack={attack}/>
+            useSword={useSword}
+            useBomb={useBomb}/>
         </div>
       </div>
     </div>

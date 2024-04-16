@@ -8,7 +8,7 @@ import Board from "./components/board/Board";
 import Movement from "./components/controls/Movement";
 import Actions from "./components/controls/Actions";
 // Utils
-import { movePlayer } from "./utils/generalUtils";
+import { movePlayer, generateBoard } from "./utils/generalUtils";
 
 function App() {
   // Hooks
@@ -33,9 +33,16 @@ function App() {
     }
 
     // Move player
-    let updatedBoard = movePlayer(boardCopy, player, dir);
+    let res = movePlayer(boardCopy, player, dir);
 
-    dispatch(updateBoard(updatedBoard));
+    // Current board
+    if(!res.generateNew) {
+      dispatch(updateBoard(res.board));
+    // Generate new board
+    } else {
+      let newBoard = generateBoard();
+      dispatch(updateBoard(newBoard));
+    }
   }
 
   return (

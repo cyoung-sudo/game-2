@@ -1,6 +1,7 @@
 import "./Board.scss";
 // Icons
 import { BsPersonWalking } from "react-icons/bs";
+import { LuDot } from "react-icons/lu";
 import { GiBrickWall } from "react-icons/gi";
 import { GiEvilMinion } from "react-icons/gi";
 import { GiBroadsword } from "react-icons/gi";
@@ -14,13 +15,13 @@ const Board = ({board}) => {
         <div key={i}>
           {row.map((val, j) => (
             <div key={j}>
-              {val === "P" && <BsPersonWalking/>}
-              {val === "_" && "_"}
-              {val === "W" && <GiBrickWall/>}
-              {val === "E" && <GiEvilMinion/>}
-              {val === "S" && <GiBroadsword/>}
-              {val === "H" && <TiHeart/>}
-              {val === "B" && <GiUnlitBomb/>}
+              {val === "P" && <span className="board-player"><BsPersonWalking/></span>}
+              {val === "_" && <span className="board-empty"><LuDot/></span>}
+              {val === "W" && <span className="board-wall"><GiBrickWall/></span>}
+              {val === "E" && <span className="board-enemy"><GiEvilMinion/></span>}
+              {val === "S" && <span className="board-sword"><GiBroadsword/></span>}
+              {val === "H" && <span className="board-heart"><TiHeart/></span>}
+              {val === "B" && <span className="board-bomb"><GiUnlitBomb/></span>}
             </div>
           ))}
         </div>

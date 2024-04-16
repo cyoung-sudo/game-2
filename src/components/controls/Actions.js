@@ -1,7 +1,7 @@
 import "./Actions.scss";
 // Icons
 import { GiBroadsword } from "react-icons/gi";
-import { GiHealthPotion } from "react-icons/gi";
+import { GiUnlitBomb } from "react-icons/gi";
 
 const Actions = () => {
   return (
@@ -12,7 +12,7 @@ const Actions = () => {
         </div>
 
         <div className="actions-ingame-bot">
-          <button><GiHealthPotion/></button>
+          <button><GiUnlitBomb/></button>
         </div>
       </div>
 

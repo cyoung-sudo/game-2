@@ -11,6 +11,37 @@
       align-items: center;
       height: 2rem;
       width: 2rem;
+
+      .board-player {
+        font-size: 1.2rem;
+      }
+
+      .board-empty {
+        font-size: 0.6rem;
+      }
+
+      .board-wall {
+        font-size: 1.2rem;
+      }
+
+      .board-enemy {
+        font-size: 1.2rem;
+      }
+
+      .board-sword {
+        font-size: 0.8rem;
+        color: skyblue;
+      }
+
+      .board-heart {
+        font-size: 0.8rem;
+        color: red;
+      }
+
+      .board-bomb {
+        font-size: 0.8rem;
+        color: khaki;
+      }
     }
   }
 }

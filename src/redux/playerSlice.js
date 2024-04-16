@@ -5,7 +5,8 @@ export const playerSlice = createSlice({
   initialState: {
     health: 3,
     swords: 0,
-    bombs: 0
+    bombs: 0,
+    dead: false
   },
   reducers: {
     updateHealth: (state, action) => {
@@ -20,6 +21,10 @@ export const playerSlice = createSlice({
       state.bombs = action.payload;
     },
 
+    updateDead: (state, action) => {
+      state.dead = action.payload;
+    },
+
     resetPlayer: (state) => {
       state.health = 3;
       state.swords = 0;
@@ -29,6 +34,6 @@ export const playerSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { updateHealth, updateSwords, updateBombs, resetPlayer } = playerSlice.actions
+export const { updateHealth, updateSwords, updateBombs, updateDead, resetPlayer } = playerSlice.actions
 
 export default playerSlice.reducer

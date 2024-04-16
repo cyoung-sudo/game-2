@@ -26,7 +26,9 @@ export const movePlayer = (board, player, dir) => {
     // Check for wall
     if(newVal !== "W") {
       // Set cellVal
-      if(newVal === "S") {
+      if(newVal === "E") {
+        cellVal = "E";
+      } else if(newVal === "S") {
         cellVal = "S"
       } else if(newVal === "H") {
         cellVal = "H"
@@ -50,6 +52,54 @@ export const movePlayer = (board, player, dir) => {
     cellVal
   };
 };
+
+export const moveEnemies = (board, enemies) => {
+  let attacked = false;
+  
+  for(let coord of enemies) {
+    let x = coord[0];
+    let y = coord[1];
+    let rL = board[0].length;
+    let cL = board.length;
+
+    // Find all valid new cells
+    let options = [];
+    // Up
+    if(x - 1 >= 0 && board[x-1][y] !== "W" && board[x-1][y] !== "E") {
+      options.push([x-1, y]);
+    }
+    // Left
+    if(y - 1 >= 0 && board[x][y-1] !== "W" && board[x][y-1] !== "E") {
+      options.push([x, y-1]);
+    }
+    // Right
+    if(y + 1 < rL && board[x][y+1] !== "W" && board[x][y+1] !== "E") {
+      options.push([x, y+1]);
+    }
+    // Down
+    if(x + 1 < cL && board[x+1][y] !== "W" && board[x+1][y] !== "E") {
+      options.push([x+1, y]);
+    }
+
+    // Pick random direction
+    let randCoord = options[Math.floor(Math.random() * options.length)];
+
+    // Player attacked
+    if(board[randCoord[0]][randCoord[1]] === "P") {
+      attacked = true;
+      board[x][y] = "_";
+    // Move enemy
+    } else {
+      board[randCoord[0]][randCoord[1]] = "E";
+      board[x][y] = "_";
+    }
+  }
+
+  return {
+    board,
+    attacked
+  }
+}
 
 export const generateBoard = () => {
   let newBoard = new Array(9).fill(null).map(() => new Array(11));

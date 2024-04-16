@@ -1,3 +1,6 @@
+// Utils
+import { defaultBoards } from "../data/boardData";
+
 export const movePlayer = (board, player, dir) => {
   let generateNew = false; // Generate new board?
   let cellVal = null; // Value of new cell
@@ -17,7 +20,7 @@ export const movePlayer = (board, player, dir) => {
   } else if(dir === "down") {
     newCell = (x + 1 < cL ? [x+1, y] : -1);
   // Skip
-  } else {
+  } else if(dir === "skip") {
     return {
       board,
       generateNew,
@@ -40,7 +43,7 @@ export const movePlayer = (board, player, dir) => {
         cellVal = "H"
       } else if(newVal === "B") {
         cellVal = "B"
-      } else {
+      } else if(newVal === "_") {
         cellVal = "_";
       }
         
@@ -68,24 +71,23 @@ export const moveEnemies = (board, enemies) => {
     let rL = board[0].length;
     let cL = board.length;
 
-    // Find all valid new cells
+    // Find all valid new cells (up, left, right, down)
     let options = [];
-    // Up
     if(x - 1 >= 0 && board[x-1][y] !== "W" && board[x-1][y] !== "E") {
       options.push([x-1, y]);
     }
-    // Left
     if(y - 1 >= 0 && board[x][y-1] !== "W" && board[x][y-1] !== "E") {
       options.push([x, y-1]);
     }
-    // Right
     if(y + 1 < rL && board[x][y+1] !== "W" && board[x][y+1] !== "E") {
       options.push([x, y+1]);
     }
-    // Down
     if(x + 1 < cL && board[x+1][y] !== "W" && board[x+1][y] !== "E") {
       options.push([x+1, y]);
     }
+
+    // Enemy is stuck
+    if(options.length === 0) continue;
 
     // Pick random direction
     let randCoord = options[Math.floor(Math.random() * options.length)];
@@ -109,7 +111,13 @@ export const moveEnemies = (board, enemies) => {
 
 export const generateBoard = () => {
   let newBoard = new Array(9).fill(null).map(() => new Array(11));
-  let options = ["_", "_", "_", "_", "_", "_", "_", "W", "W", "W", "E", "S", "H", "B"];
+  // Set options ratios
+  let options = new Array(45).fill("_");
+  options.push(...new Array(45).fill("W"));
+  options.push(...new Array(9).fill("E"));
+  options.push(...new Array(3).fill("S"));
+  options.push(...new Array(2).fill("H"));
+  options.push(...new Array(1).fill("B"));
 
   // Fill board w/ random options
   for(let i = 0; i < newBoard.length; i++) {
@@ -124,5 +132,61 @@ export const generateBoard = () => {
   let colMid = Math.floor(newBoard.length / 2);
   newBoard[colMid][rowMid] = "P"
 
-  return newBoard;
+  // Check for valid path from center to edges
+  let start = [colMid, rowMid];
+  let validPath = bfs(newBoard, start);
+
+  // Return generated board
+  if(validPath) {
+    return newBoard;
+  // Return default board
+  } else {
+    let randBoard = defaultBoards[Math.floor(Math.random() * defaultBoards.length)];
+    return randBoard;
+  }
 };
+
+let bfs = (board, start) => {
+  let visited = {};
+  let queue = [];
+  let found = false;
+
+  // Add initial start coord
+  queue.push(start);
+  visited[start[0] + "," + start[1]] = true;
+
+  while(queue.length && !found) {
+    let queueL = queue.length;
+    for(let i = 0; i < queueL; i++) {
+      let coord = queue.shift();
+      let x = coord[0];
+      let y = coord[1];
+      let rL = board[0].length;
+      let cL = board.length;
+
+      // Find adjcent coords
+      let up = (x - 1 >= 0 ? [x-1, y] : null);
+      let left = (y - 1 >= 0 ? [x, y-1] : null);
+      let right = (y + 1 < rL ? [x, y+1] : null);
+      let down = (x + 1 < cL ? [x+1, y] : null);
+      let dirs = [up, left, right, down];
+
+      for(let dir of dirs) {
+        // Valid coord
+        if(dir) {
+          let str = dir[0] + "," + dir[1];
+          if(!visited[str] && board[dir[0]][dir[1]] !== "W") {
+            visited[str] = true;
+            queue.push(dir);
+          }
+        // Path found
+        } else {
+          found = true;
+          break;
+        }
+      }
+    }
+  }
+
+  return found;
+}

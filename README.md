@@ -2,6 +2,15 @@
 
 <p align="center">An game where the player fights through endless randomly-generated levels. The levels consists of enemies & many different useable items. Players & enemies can move in 4 directions.</p>
 
+## Keyboard controls
+
+- Movement
+    - (Up, Left, Down, Right, Skip) -> ("w", "a", "s", "d", "e")
+- Actions
+    - Use sword -> "k"
+    - Use bomb -> "l"
+    - New game -> ","
+
 ## Links
 
 - [Website](https://cyoung-sudo.github.io/game-2/)

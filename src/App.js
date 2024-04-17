@@ -1,4 +1,6 @@
 import './App.scss';
+// React
+import { useEffect } from "react";
 // Redux
 import { useSelector, useDispatch } from 'react-redux';
 import { updateBoard, resetBoard } from "./redux/boardSlice";
@@ -12,12 +14,38 @@ import Actions from "./components/controls/Actions";
 // Utils
 import { movePlayer, moveEnemies, generateBoard } from "./utils/generalUtils";
 
-function App() {
+const App = () => {
   // Hooks
   let {board} = useSelector((state) => state.board);
   let {health, swords, bombs} = useSelector((state) => state.player);
   let {score, finish} = useSelector((state) => state.game);
   let dispatch = useDispatch();
+
+  // Handle key input
+  useEffect(() => {
+    document.addEventListener("keyup", handleKeys, true);
+    return () => document.removeEventListener("keyup", handleKeys, true);
+  }, [board]);
+
+  let handleKeys = e => {
+    if(e.key === "w") {
+      move("up")
+    } else if(e.key === "a") {
+      move("left");
+    } else if(e.key === "d") {
+      move("right");
+    } else if(e.key === "s") {
+      move("down");
+    } else if(e.key === "e") {
+      move("skip");
+    } else if(e.key === "k") {
+      decSword();
+    } else if(e.key === "l") {
+      decBomb();
+    } else if(e.key === ",") {
+      newGame();
+    }
+  };
 
   let move = dir => {
     if(finish) return;
@@ -76,7 +104,7 @@ function App() {
     }
   };
 
-  let useSword = () => {
+  let decSword = () => {
     if(finish) return;
     if(swords <= 0) return;
 
@@ -128,7 +156,7 @@ function App() {
     dispatch(updateBoard(res.board));
   };
 
-  let useBomb = () => {
+  let decBomb = () => {
     if(finish) return;
     if(bombs <= 0) return;
 
@@ -179,13 +207,13 @@ function App() {
 
         <div id="actions-wrap">
           <Actions
-            useSword={useSword}
-            useBomb={useBomb}
+            decSword={decSword}
+            decBomb={decBomb}
             newGame={newGame}/>
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default App;

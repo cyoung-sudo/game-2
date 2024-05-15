@@ -1,6 +1,6 @@
 <h1 align="center">Game 2</h1>
 
-<p align="center">An game where the player fights through endless randomly-generated levels. The levels consists of enemies & many different useable items. Players & enemies can move in 4 directions.</p>
+<p align="center">A game where the player fights through endless randomly-generated levels. The levels consists of enemies & many different useable items. Players & enemies can move in 4 directions.</p>
 
 ## Keyboard controls
 
